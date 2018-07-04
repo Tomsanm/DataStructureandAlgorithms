@@ -1,2 +1,87 @@
 # create by Python
-#
+# 合并两个有序链表，使之成为新的有序链表
+#思路：step1. 创建链表:属性：表头，节点。
+#                    操作：表头，末端添加
+#                         任意位置插入元素，删除元素
+#                         更改元素，遍历元素，显示元素
+#     step2. 创建合并函数
+#Step1
+class Note():
+    '''这里的data是节点内容，next_实际上是下个节点类'''
+
+    def __init__(self,data,next_=None): 
+        self.data = data
+        self.next_ = next_
+
+class ConnectList():
+    '''链表最关键的是节点类，还有表头'''
+    def __init__(self):
+        self.head = None
+        self.length = 0
+
+    def preadd(self,data):
+        if self.head ==None:
+            note = Note(data)
+            self.head = note
+            self.length += 1
+        else:
+            p2=self.head
+            note = Note(data)
+            note.next_=p2
+            self.head = note
+            self.length += 1
+
+    def append_me(self,data):
+        if self.head ==None:
+            note = Note(data)
+            self.head = note
+            self.length += 1
+        else: # 从表头开始遍历
+            p = self.head
+            while p is not None:
+                '''也说明,类实例的赋值只是改变了指针,故一起变动'''
+                p0=p # 保存下了 None前面的节点
+                p = p.next_
+            note = Note(data)
+            p0.next_= note
+            self.length += 1
+
+    def insert_data(self,i,data): #表头是0号节点，在第几个节点后加入元素？
+        if i<0 or i>self.length-1:
+            raise ValueError("i outrange")
+        else:
+            p = self.head
+            while i:
+                i -= 1
+                p = p.next_
+            p_next = p.next_
+            note = Note(data,p_next)
+            p.next = note
+            self.length += 1
+
+    def del_data(self,i): # 删除第i个节点
+        if i<0 or i>self.length-1 or self.length==0:
+            raise ValueError("i outrange")
+        else:
+            if i == 0:
+                self.head=self.head.next_
+                self.length -= 1
+            else: # 遍历找i前面的节点
+                p = self.head
+                while i:
+                    i -= 1
+                    p0 =p # 保存 i 前一个节点
+                    p = p.next_
+                p0.next_=p.next_
+                self.length -= 1
+
+    def print_me(self):
+        p = self.head
+        me=[]
+        while p is not None:
+            '''也说明,类实例的赋值只是改变了指针,故一起变动'''
+            me.append(p.data)
+            p = p.next_
+        return print(me)
+#Step2
+

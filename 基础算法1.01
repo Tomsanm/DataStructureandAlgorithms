@@ -84,4 +84,44 @@ class ConnectList():
             p = p.next_
         return print(me)
 #Step2
+def mergeList_Byorder(L1,L2):
+    newlist=ConnectList()
+    for i in range(L1.length+L2.length):
+        if L1.head.data >=L2.head.data:
+            d = L2.head.data
+            L2.del_data(0)
+            newlist.append_me(d)
+        else:
+            d = L1.head.data
+            L1.del_data(0)
+            newlist.append_me(d)
+        if L1.head is None or L2.head is None:
+            break
+    if L1.length == 0 :
+        p = newlist.head
+        while p is not None :
+            p0=p
+            p=p.next_
+        p0.next_=L2.head
 
+    if L2.length == 0 :
+        p = newlist.head
+        while p is not None :
+            p0=p
+            p=p.next_
+        p0.next_=L1.head
+    return newlist
+
+def main():
+    L1 = ConnectList()
+    for i in [1,3,5,7,8,9]:
+        L1.append_me(i)
+    L2 =ConnectList()
+    for i in [2,4,6,11,18,44]:
+        L2.append_me(i)
+    L1.print_me()
+    L2.print_me()
+    c= mergeList_Byorder(L1,L2)
+    c.print_me()
+if __name__ == '__main__':
+    main()
